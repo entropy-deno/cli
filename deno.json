@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "lib": [
+      "deno.ns",
+      "dom",
+      "dom.asynciterable",
+      "dom.iterable",
+      "esnext"
+    ],
+    "strict": true
+  },
+  "fmt": {
+    "include": [
+      "src/"
+    ],
+    "indentWidth": 2,
+    "lineWidth": 85,
+    "semiColons": true,
+    "singleQuote": true
+  },
+  "imports": {
+    "@std/": "https://deno.land/std@0.194.0/"
+  },
+  "lint": {
+    "rules": {
+      "exclude": [
+        "no-explicit-any"
+      ]
+    }
+  },
+  "lock": false
+}
