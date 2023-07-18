@@ -19,7 +19,7 @@ if (import.meta.main) {
   }
 
   if (Deno.args[0] === 'new') {
-    const name = Deno.args[3] || prompt('Project name: ');
+    const name = Deno.args[1] || prompt('Project name: ');
 
     console.log(name);
   }
