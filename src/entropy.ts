@@ -21,6 +21,8 @@ if (import.meta.main) {
   if (Deno.args[0] === 'new') {
     const name = Deno.args[1] || prompt('Project name: ');
 
-    console.log(name);
+    const repoName = 'app-template';
+    const repoUrl = `https://github.com/entropy-deno/${repoName}`;
+    const zipUrl = `${repoUrl}/archive/refs/heads/main.zip`;
   }
 }
