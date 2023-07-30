@@ -20,12 +20,5 @@
     "semiColons": true,
     "singleQuote": true
   },
-  "lint": {
-    "rules": {
-      "exclude": [
-        "no-explicit-any"
-      ]
-    }
-  },
   "lock": false
 }
