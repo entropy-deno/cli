@@ -1,5 +1,6 @@
 import { parse as parseFlags } from 'https://deno.land/std@0.196.0/flags/mod.ts';
 import { inject, Logger } from 'https://deno.land/x/entropy@1.0.0-alpha.2/src/mod.ts';
+import { VERSION } from './constants.ts';
 
 if (import.meta.main) {
   const logger = inject(Logger);
@@ -13,7 +14,7 @@ if (import.meta.main) {
   });
 
   if (flags.v || flags.version) {
-    logger.info('Entropy CLI 1.0.0-alpha.0');
+    logger.info(`Entropy CLI ${VERSION}`);
 
     Deno.exit();
   }
