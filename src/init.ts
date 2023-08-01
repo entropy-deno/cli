@@ -1,7 +1,7 @@
 import {
   inject,
   Logger,
-} from 'https://deno.land/x/entropy@1.0.0-alpha.4/src/mod.ts';
+} from 'https://deno.land/x/entropy@1.0.0-alpha.5/src/mod.ts';
 import { readAll } from 'https://deno.land/std@0.196.0/streams/mod.ts';
 import { readerFromStreamReader } from 'https://deno.land/std@0.196.0/streams/mod.ts';
 import { Untar } from 'https://deno.land/std@0.196.0/archive/untar.ts';
@@ -25,7 +25,9 @@ export async function init() {
       const denoReader = readerFromStreamReader(streamReader);
       const untar = new Untar(denoReader);
 
-      await Deno.mkdir(`./${name}`, { recursive: true });
+      await Deno.mkdir(`./${name}`, {
+        recursive: true,
+      });
 
       const ommitedFiles = ['.github', 'pax_global_header'];
 

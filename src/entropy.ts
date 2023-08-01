@@ -4,7 +4,7 @@ import {
   Constructor,
   inject,
   Logger,
-} from 'https://deno.land/x/entropy@1.0.0-alpha.4/src/mod.ts';
+} from 'https://deno.land/x/entropy@1.0.0-alpha.5/src/mod.ts';
 import { NewCommand } from './commands/new.command.ts';
 import { VersionCommand } from './commands/version.command.ts';
 
