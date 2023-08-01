@@ -3,6 +3,7 @@ import {
   inject,
   Logger,
 } from 'https://deno.land/x/entropy@1.0.0-alpha.4/src/mod.ts';
+import { init } from './init.ts';
 import { VERSION } from './constants.ts';
 
 if (import.meta.main) {
@@ -23,6 +24,6 @@ if (import.meta.main) {
   }
 
   if (flags._[0] === 'new') {
-    await import('./init.ts');
+    await init();
   }
 }
