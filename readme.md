@@ -18,7 +18,7 @@
 
 <br>
 
-<a href="https://deno.land/x/entropy" target="_blank">
+<a href="https://deno.land/x/entropy_cli" target="_blank">
     <img src="https://shield.deno.dev/deno/%5E1.35.0" alt="Required minimal Deno version">
     &nbsp;
     <img src="https://shield.deno.dev/x/entropy_cli" alt="Latest Entropy CLI version">
