@@ -2,9 +2,9 @@ import {
   inject,
   Logger,
 } from 'https://deno.land/x/entropy@1.0.0-alpha.5/src/mod.ts';
-import { readAll } from 'https://deno.land/std@0.196.0/streams/mod.ts';
-import { readerFromStreamReader } from 'https://deno.land/std@0.196.0/streams/mod.ts';
-import { Untar } from 'https://deno.land/std@0.196.0/archive/untar.ts';
+import { readAll } from 'https://deno.land/std@0.197.0/streams/mod.ts';
+import { readerFromStreamReader } from 'https://deno.land/std@0.197.0/streams/mod.ts';
+import { Untar } from 'https://deno.land/std@0.197.0/archive/untar.ts';
 
 export async function init() {
   const logger = inject(Logger);
