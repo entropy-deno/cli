@@ -12,6 +12,7 @@
   },
   "fmt": {
     "include": [
+      "init.ts",
       "src/",
       "*.md"
     ],
