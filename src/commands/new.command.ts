@@ -2,7 +2,7 @@ import { Command } from '../interfaces/command.interface.ts';
 import {
   inject,
   Logger,
-} from 'https://deno.land/x/entropy@1.0.0-alpha.5/src/mod.ts';
+} from 'https://deno.land/x/entropy@1.0.0-alpha.8/src/mod.ts';
 import { readAll } from 'https://deno.land/std@0.197.0/streams/mod.ts';
 import { readerFromStreamReader } from 'https://deno.land/std@0.197.0/streams/mod.ts';
 import { Untar } from 'https://deno.land/std@0.197.0/archive/untar.ts';
@@ -21,7 +21,7 @@ export class NewCommand implements Command {
       const res = await fetch(archiveUrl);
 
       const streamReader = res.body?.pipeThrough(new DecompressionStream('gzip'))
-        ?.getReader();
+        .getReader();
 
       if (streamReader) {
         const denoReader = readerFromStreamReader(streamReader);
