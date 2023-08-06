@@ -11,9 +11,9 @@ export class NewCommand implements Command {
   private readonly logger = inject(Logger);
 
   public async handle() {
-    const repoName = 'app-template';
-    const repoUrl = `https://github.com/entropy-deno/${repoName}`;
-    const archiveUrl = `${repoUrl}/archive/refs/heads/main.tar.gz`;
+    const repositoryName = 'app-template';
+    const repositoryUrl = `https://github.com/entropy-deno/${repositoryName}`;
+    const archiveUrl = `${repositoryUrl}/archive/refs/heads/main.tar.gz`;
 
     const name = prompt('Project name: ') ?? 'entropy-app';
 
@@ -31,13 +31,14 @@ export class NewCommand implements Command {
           recursive: true,
         });
 
+        const archiveName = `${repositoryUrl}-main`;
         const ommitedFiles = ['.github', 'pax_global_header'];
 
         fileEntryLoop:
         for await (const entry of untar) {
           const { fileName, type } = entry;
 
-          if (fileName === 'app-template-main/') {
+          if (fileName === `${archiveName}/`) {
             continue;
           }
 
@@ -48,7 +49,7 @@ export class NewCommand implements Command {
           }
 
           if (type === 'directory') {
-            await Deno.mkdir(fileName.replace('app-template-main', name), {
+            await Deno.mkdir(fileName.replace(archiveName, name), {
               recursive: true,
             });
 
@@ -59,7 +60,7 @@ export class NewCommand implements Command {
 
           if (fileName.includes('.png')) {
             await Deno.writeFile(
-              fileName.replace('app-template-main', name),
+              fileName.replace(archiveName, name),
               content,
             );
 
@@ -69,7 +70,7 @@ export class NewCommand implements Command {
           const textContent = new TextDecoder('utf-8').decode(content);
 
           await Deno.writeTextFile(
-            fileName.replace('app-template-main', name),
+            fileName.replace(archiveName, name),
             textContent,
           );
         }
