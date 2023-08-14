@@ -20,7 +20,9 @@ export class NewCommand implements Command {
     try {
       const res = await fetch(archiveUrl);
 
-      const streamReader = res.body?.pipeThrough(new DecompressionStream('gzip'))
+      const streamReader = res.body?.pipeThrough(
+        new DecompressionStream('gzip'),
+      )
         .getReader();
 
       if (streamReader) {
