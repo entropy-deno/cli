@@ -1,4 +1,4 @@
-import { parse as parseFlags } from 'https://deno.land/std@0.199.0/flags/mod.ts';
+import { parse as parseFlags } from 'https://deno.land/std@0.200.0/flags/mod.ts';
 import { Command } from './interfaces/command.interface.ts';
 import { Constructor } from 'https://deno.land/x/entropy@1.0.0-alpha.10/src/utils/utils.module.ts';
 import { inject } from 'https://deno.land/x/entropy@1.0.0-alpha.10/src/injector/injector.module.ts';

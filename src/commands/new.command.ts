@@ -3,9 +3,9 @@ import {
   inject,
   Logger,
 } from 'https://deno.land/x/entropy@1.0.0-alpha.10/src/mod.ts';
-import { readAll } from 'https://deno.land/std@0.199.0/streams/mod.ts';
-import { readerFromStreamReader } from 'https://deno.land/std@0.199.0/streams/mod.ts';
-import { Untar } from 'https://deno.land/std@0.199.0/archive/untar.ts';
+import { readAll } from 'https://deno.land/std@0.200.0/streams/mod.ts';
+import { readerFromStreamReader } from 'https://deno.land/std@0.200.0/streams/mod.ts';
+import { Untar } from 'https://deno.land/std@0.200.0/archive/untar.ts';
 
 export class NewCommand implements Command {
   private readonly logger = inject(Logger);
