@@ -1,3 +1,3 @@
 export interface Command {
-  handle(): number | void | Promise<number | void>;
+  handle(...params: unknown[]): number | void | Promise<number | void>;
 }

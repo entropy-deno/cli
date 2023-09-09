@@ -10,8 +10,9 @@ if (import.meta.main) {
   const logger = inject(Logger);
 
   const flags = parseFlags(Deno.args, {
-    boolean: ['v', 'version'],
+    boolean: ['mongodb', 'v', 'version'],
     default: {
+      mongodb: false,
       v: false,
       version: false,
     },
@@ -30,7 +31,7 @@ if (import.meta.main) {
 
   for (const [name, command] of Object.entries(commands)) {
     if (flags._[0] === name) {
-      const result = new command().handle();
+      const result = new command().handle(flags);
       const exitCode = result instanceof Promise ? await result : result;
 
       Deno.exit(exitCode ?? 0);
