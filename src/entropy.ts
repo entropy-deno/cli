@@ -1,8 +1,8 @@
-import { parse as parseFlags } from 'https://deno.land/std@0.200.0/flags/mod.ts';
+import { parse as parseFlags } from 'https://deno.land/std@0.201.0/flags/mod.ts';
 import { Command } from './interfaces/command.interface.ts';
-import { Constructor } from 'https://deno.land/x/entropy@1.0.0-alpha.10/src/utils/utils.module.ts';
-import { inject } from 'https://deno.land/x/entropy@1.0.0-alpha.10/src/injector/injector.module.ts';
-import { Logger } from 'https://deno.land/x/entropy@1.0.0-alpha.10/src/logger/logger.module.ts';
+import { Constructor } from 'https://deno.land/x/entropy@1.0.0-alpha.13/src/utils/utils.module.ts';
+import { inject } from 'https://deno.land/x/entropy@1.0.0-alpha.13/src/injector/injector.module.ts';
+import { Logger } from 'https://deno.land/x/entropy@1.0.0-alpha.13/src/logger/logger.module.ts';
 import { NewCommand } from './commands/new.command.ts';
 import { VersionCommand } from './commands/version.command.ts';
 
