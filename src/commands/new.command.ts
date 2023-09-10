@@ -1,3 +1,4 @@
+import { camelCase } from 'https://deno.land/x/case@2.1.1/mod.ts';
 import {
   inject,
   Logger,
@@ -19,7 +20,7 @@ export class NewCommand implements Command {
     const repositoryUrl = `https://github.com/entropy-deno/${repositoryName}`;
     const archiveUrl = `${repositoryUrl}/archive/refs/heads/main.tar.gz`;
 
-    const projectName = prompt('Project name: ') ?? 'entropy-app';
+    const projectName = camelCase(prompt('Project name: ') ?? 'entropy_app');
 
     try {
       const res = await fetch(archiveUrl);
@@ -87,18 +88,19 @@ export class NewCommand implements Command {
 
           await Deno.writeTextFile(
             schemaFile,
-            (await Deno.readTextFile(schemaFile)).replace('mysql', 'mongodb')
+            (await Deno.readTextFile(schemaFile))
               .replace(
-                'Int      @default(autoincrement())',
-                'String   @default(auto()) @map("_id") @db.ObjectId',
-              ),
+                'Int      @id @default(autoincrement())',
+                'String   @id @default(auto()) @map("_id") @db.ObjectId',
+              )
+              .replace('mysql', 'mongodb'),
           );
 
           await Deno.writeTextFile(
             envFile,
             (await Deno.readTextFile(envFile)).replace(
               /^DATABASE_URL=.*?$/m,
-              'DATABASE_URL=mongodb://root:@localhost/entropy',
+              `DATABASE_URL=mongodb://root:@localhost/${projectName}`,
             ),
           );
 
@@ -106,7 +108,7 @@ export class NewCommand implements Command {
             `${envFile}.example`,
             (await Deno.readTextFile(`${envFile}.example`)).replace(
               /^DATABASE_URL=.*?$/m,
-              'DATABASE_URL=mongodb://root:@localhost/entropy',
+              `DATABASE_URL=mongodb://root:@localhost/${projectName}`,
             ),
           );
         }
