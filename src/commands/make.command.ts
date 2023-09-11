@@ -6,7 +6,10 @@ import {
   Logger,
 } from 'https://deno.land/x/entropy@1.0.0-alpha.13/src/mod.ts';
 import { Command } from '../interfaces/command.interface.ts';
+import { channelStub } from '../stubs/channel.stub.ts';
 import { controllerStub } from '../stubs/controller.stub.ts';
+import { serviceStub } from '../stubs/service.stub.ts';
+import { middlewareStub } from '../stubs/middleware.stub.ts';
 
 interface Args {
   _: string[];
@@ -71,6 +74,24 @@ export class MakeCommand implements Command {
     const moduleName = plural(snakeCase(args._[2]));
 
     switch (args._[1]) {
+      case 'channel': {
+        const className = `${pascalCase(args._[2])}Channel`;
+        const path = `${Deno.cwd()}/src/${moduleName}`;
+
+        if (!await exists(path)) {
+          await Deno.mkdir(path, {
+            recursive: true,
+          });
+        }
+
+        await Deno.writeTextFile(
+          `${path}/${fileName}.channel.ts`,
+          channelStub(className, plural(snakeCase(args._[2]))),
+        );
+
+        break;
+      }
+
       case 'controller': {
         const className = `${pascalCase(args._[2])}Controller`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
@@ -89,6 +110,42 @@ export class MakeCommand implements Command {
         break;
       }
 
+      case 'middleware': {
+        const className = `${pascalCase(args._[2])}Middleware`;
+        const path = `${Deno.cwd()}/src/${moduleName}`;
+
+        if (!await exists(path)) {
+          await Deno.mkdir(path, {
+            recursive: true,
+          });
+        }
+
+        await Deno.writeTextFile(
+          `${path}/${fileName}.middleware.ts`,
+          middlewareStub(className),
+        );
+
+        break;
+      }
+
+      case 'service': {
+        const className = `${pascalCase(args._[2])}Service`;
+        const path = `${Deno.cwd()}/src/${moduleName}`;
+
+        if (!await exists(path)) {
+          await Deno.mkdir(path, {
+            recursive: true,
+          });
+        }
+
+        await Deno.writeTextFile(
+          `${path}/${fileName}.service.ts`,
+          serviceStub(className, `get${plural(pascalCase(args._[2]))}`),
+        );
+
+        break;
+      }
+
       default: {
         this.logger.error('Invalid <file_type> argument', {
           additionalInfo: `Run 'entropy make --help' for more information`,
@@ -97,5 +154,7 @@ export class MakeCommand implements Command {
         Deno.exit(1);
       }
     }
+
+    this.logger.info(`Created new ${args._[1]} ${args._[2]}`);
   }
 }
