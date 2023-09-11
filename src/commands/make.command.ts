@@ -8,8 +8,10 @@ import {
 import { Command } from '../interfaces/command.interface.ts';
 import { channelStub } from '../stubs/channel.stub.ts';
 import { controllerStub } from '../stubs/controller.stub.ts';
-import { serviceStub } from '../stubs/service.stub.ts';
 import { middlewareStub } from '../stubs/middleware.stub.ts';
+import { moduleStub } from '../stubs/module.stub.ts';
+import { serviceStub } from '../stubs/service.stub.ts';
+import { testStub } from '../stubs/test.stub.ts';
 
 interface Args {
   _: string[];
@@ -46,10 +48,6 @@ export class MakeCommand implements Command {
         {
           type: 'module',
           description: 'Create new application module',
-        },
-        {
-          type: 'seeder',
-          description: 'Create new database seeder',
         },
         {
           type: 'service',
@@ -128,6 +126,24 @@ export class MakeCommand implements Command {
         break;
       }
 
+      case 'module': {
+        const className = `${pascalCase(args._[2])}Module`;
+        const path = `${Deno.cwd()}/src/${moduleName}`;
+
+        if (!await exists(path)) {
+          await Deno.mkdir(path, {
+            recursive: true,
+          });
+        }
+
+        await Deno.writeTextFile(
+          `${path}/${fileName}.module.ts`,
+          moduleStub(className),
+        );
+
+        break;
+      }
+
       case 'service': {
         const className = `${pascalCase(args._[2])}Service`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
@@ -141,6 +157,24 @@ export class MakeCommand implements Command {
         await Deno.writeTextFile(
           `${path}/${fileName}.service.ts`,
           serviceStub(className, `get${plural(pascalCase(args._[2]))}`),
+        );
+
+        break;
+      }
+
+      case 'test': {
+        const className = `${pascalCase(args._[2])}Module`;
+        const path = `${Deno.cwd()}/src/${moduleName}`;
+
+        if (!await exists(path)) {
+          await Deno.mkdir(path, {
+            recursive: true,
+          });
+        }
+
+        await Deno.writeTextFile(
+          `${path}/${fileName}.test.ts`,
+          testStub(className, plural(snakeCase(args._[2]))),
         );
 
         break;
