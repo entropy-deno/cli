@@ -1,4 +1,4 @@
-import { camelCase } from 'https://deno.land/x/case@2.1.1/mod.ts';
+import { snakeCase } from 'https://deno.land/x/case@2.1.1/mod.ts';
 import {
   inject,
   Logger,
@@ -20,7 +20,7 @@ export class NewCommand implements Command {
     const repositoryUrl = `https://github.com/entropy-deno/${repositoryName}`;
     const archiveUrl = `${repositoryUrl}/archive/refs/heads/main.tar.gz`;
 
-    const projectName = camelCase(prompt('Project name: ') ?? 'entropy_app');
+    const projectName = snakeCase(prompt('Project name: ') ?? 'entropy_app');
 
     try {
       const res = await fetch(archiveUrl);

@@ -7,6 +7,8 @@ export class VersionCommand implements Command {
   private readonly logger = inject(Logger);
 
   public handle() {
-    this.logger.info(`Entropy CLI ${VERSION}`);
+    this.logger.info(`Entropy CLI version %c${VERSION}`, {
+      colors: ['blue'],
+    });
   }
 }

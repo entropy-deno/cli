@@ -3,6 +3,7 @@ import { Constructor } from 'https://deno.land/x/entropy@1.0.0-alpha.13/src/util
 import { inject } from 'https://deno.land/x/entropy@1.0.0-alpha.13/src/injector/injector.module.ts';
 import { Logger } from 'https://deno.land/x/entropy@1.0.0-alpha.13/src/logger/logger.module.ts';
 import { Command } from './src/interfaces/command.interface.ts';
+import { MakeCommand } from './src/commands/make.command.ts';
 import { NewCommand } from './src/commands/new.command.ts';
 import { VersionCommand } from './src/commands/version.command.ts';
 
@@ -10,8 +11,10 @@ if (import.meta.main) {
   const logger = inject(Logger);
 
   const flags = parseFlags(Deno.args, {
-    boolean: ['mongodb', 'v', 'version'],
+    boolean: ['h', 'help', 'mongodb', 'v', 'version'],
     default: {
+      h: false,
+      help: false,
       mongodb: false,
       v: false,
       version: false,
@@ -25,6 +28,7 @@ if (import.meta.main) {
   }
 
   const commands: Record<string, Constructor<Command>> = {
+    make: MakeCommand,
     new: NewCommand,
     version: VersionCommand,
   };
