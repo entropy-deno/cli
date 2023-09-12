@@ -22,6 +22,9 @@ export class MakeCommand implements Command {
   private readonly logger = inject(Logger);
 
   public async handle(args: Args) {
+    const type = args._[1];
+    const name = args._[2];
+
     if (args.help) {
       this.logger.info(
         'Usage: %c$ %centropy make %c<file_type> <name>',
@@ -62,18 +65,18 @@ export class MakeCommand implements Command {
       return;
     }
 
-    if (!args._[2]) {
+    if (!name) {
       this.logger.error('The <name> argument is required');
 
       return;
     }
 
-    const fileName = snakeCase(args._[2]);
-    const moduleName = plural(snakeCase(args._[2]));
+    const fileName = snakeCase(name);
+    const moduleName = plural(snakeCase(name));
 
-    switch (args._[1]) {
+    switch (type) {
       case 'channel': {
-        const className = `${pascalCase(args._[2])}Channel`;
+        const className = `${pascalCase(name)}Channel`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
         if (!await exists(path)) {
@@ -84,14 +87,14 @@ export class MakeCommand implements Command {
 
         await Deno.writeTextFile(
           `${path}/${fileName}.channel.ts`,
-          channelStub(className, plural(snakeCase(args._[2]))),
+          channelStub(className, plural(snakeCase(name))),
         );
 
         break;
       }
 
       case 'controller': {
-        const className = `${pascalCase(args._[2])}Controller`;
+        const className = `${pascalCase(name)}Controller`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
         if (!await exists(path)) {
@@ -102,14 +105,14 @@ export class MakeCommand implements Command {
 
         await Deno.writeTextFile(
           `${path}/${fileName}.controller.ts`,
-          controllerStub(className, plural(snakeCase(args._[2]))),
+          controllerStub(className, plural(snakeCase(name))),
         );
 
         break;
       }
 
       case 'middleware': {
-        const className = `${pascalCase(args._[2])}Middleware`;
+        const className = `${pascalCase(name)}Middleware`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
         if (!await exists(path)) {
@@ -127,7 +130,7 @@ export class MakeCommand implements Command {
       }
 
       case 'module': {
-        const className = `${pascalCase(args._[2])}Module`;
+        const className = `${pascalCase(name)}Module`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
         if (!await exists(path)) {
@@ -145,7 +148,7 @@ export class MakeCommand implements Command {
       }
 
       case 'service': {
-        const className = `${pascalCase(args._[2])}Service`;
+        const className = `${pascalCase(name)}Service`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
         if (!await exists(path)) {
@@ -156,14 +159,14 @@ export class MakeCommand implements Command {
 
         await Deno.writeTextFile(
           `${path}/${fileName}.service.ts`,
-          serviceStub(className, `get${plural(pascalCase(args._[2]))}`),
+          serviceStub(className, `get${plural(pascalCase(name))}`),
         );
 
         break;
       }
 
       case 'test': {
-        const className = `${pascalCase(args._[2])}Module`;
+        const className = `${pascalCase(name)}Module`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
         if (!await exists(path)) {
@@ -174,7 +177,7 @@ export class MakeCommand implements Command {
 
         await Deno.writeTextFile(
           `${path}/${fileName}.test.ts`,
-          testStub(className, plural(snakeCase(args._[2]))),
+          testStub(className, plural(snakeCase(name))),
         );
 
         break;
@@ -189,6 +192,6 @@ export class MakeCommand implements Command {
       }
     }
 
-    this.logger.info(`Created new ${args._[1]} ${args._[2]}`);
+    this.logger.info(`Created new ${type} ${name}`);
   }
 }
