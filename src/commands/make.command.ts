@@ -1,4 +1,3 @@
-import { exists } from 'https://deno.land/std@0.201.0/fs/mod.ts';
 import { pascalCase, snakeCase } from 'https://deno.land/x/case@2.1.1/mod.ts';
 import { plural } from 'https://deno.land/x/deno_plural@2.0.0/mod.ts';
 import {
@@ -79,10 +78,14 @@ export class MakeCommand implements Command {
         const className = `${pascalCase(name)}Channel`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
-        if (!await exists(path)) {
+        try {
           await Deno.mkdir(path, {
             recursive: true,
           });
+        } catch (error) {
+          if (!(error instanceof Deno.errors.AlreadyExists)) {
+            throw error;
+          }
         }
 
         await Deno.writeTextFile(
@@ -97,10 +100,14 @@ export class MakeCommand implements Command {
         const className = `${pascalCase(name)}Controller`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
-        if (!await exists(path)) {
+        try {
           await Deno.mkdir(path, {
             recursive: true,
           });
+        } catch (error) {
+          if (!(error instanceof Deno.errors.AlreadyExists)) {
+            throw error;
+          }
         }
 
         await Deno.writeTextFile(
@@ -115,10 +122,14 @@ export class MakeCommand implements Command {
         const className = `${pascalCase(name)}Middleware`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
-        if (!await exists(path)) {
+        try {
           await Deno.mkdir(path, {
             recursive: true,
           });
+        } catch (error) {
+          if (!(error instanceof Deno.errors.AlreadyExists)) {
+            throw error;
+          }
         }
 
         await Deno.writeTextFile(
@@ -133,10 +144,14 @@ export class MakeCommand implements Command {
         const className = `${pascalCase(name)}Module`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
-        if (!await exists(path)) {
+        try {
           await Deno.mkdir(path, {
             recursive: true,
           });
+        } catch (error) {
+          if (!(error instanceof Deno.errors.AlreadyExists)) {
+            throw error;
+          }
         }
 
         await Deno.writeTextFile(
@@ -151,10 +166,14 @@ export class MakeCommand implements Command {
         const className = `${pascalCase(name)}Service`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
-        if (!await exists(path)) {
+        try {
           await Deno.mkdir(path, {
             recursive: true,
           });
+        } catch (error) {
+          if (!(error instanceof Deno.errors.AlreadyExists)) {
+            throw error;
+          }
         }
 
         await Deno.writeTextFile(
@@ -169,10 +188,14 @@ export class MakeCommand implements Command {
         const className = `${pascalCase(name)}Module`;
         const path = `${Deno.cwd()}/src/${moduleName}`;
 
-        if (!await exists(path)) {
+        try {
           await Deno.mkdir(path, {
             recursive: true,
           });
+        } catch (error) {
+          if (!(error instanceof Deno.errors.AlreadyExists)) {
+            throw error;
+          }
         }
 
         await Deno.writeTextFile(
