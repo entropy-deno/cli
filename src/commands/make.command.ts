@@ -3,7 +3,7 @@ import { plural } from 'https://deno.land/x/deno_plural@2.0.0/mod.ts';
 import {
   inject,
   Logger,
-} from 'https://deno.land/x/entropy@1.0.0-alpha.13/src/mod.ts';
+} from 'https://deno.land/x/entropy@1.0.0-beta.1/src/mod.ts';
 import { Command } from '../interfaces/command.interface.ts';
 import { channelStub } from '../stubs/channel.stub.ts';
 import { controllerStub } from '../stubs/controller.stub.ts';
