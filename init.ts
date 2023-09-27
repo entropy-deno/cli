@@ -1,4 +1,4 @@
-import { parse as parseFlags } from 'https://deno.land/std@0.202.0/flags/mod.ts';
+import { parse as parseFlags } from 'https://deno.land/std@0.203.0/flags/mod.ts';
 import { NewCommand } from './src/commands/new.command.ts';
 
 const flags = parseFlags(Deno.args, {
