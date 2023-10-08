@@ -1,4 +1,4 @@
-import { snakeCase } from 'https://deno.land/x/case@2.1.1/mod.ts';
+import { snakeCase } from 'https://deno.land/x/case@2.2.0/mod.ts';
 import {
   inject,
   Logger,

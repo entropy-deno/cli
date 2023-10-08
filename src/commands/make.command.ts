@@ -1,4 +1,4 @@
-import { pascalCase, snakeCase } from 'https://deno.land/x/case@2.1.1/mod.ts';
+import { pascalCase, snakeCase } from 'https://deno.land/x/case@2.2.0/mod.ts';
 import { plural } from 'https://deno.land/x/deno_plural@2.0.0/mod.ts';
 import {
   inject,
