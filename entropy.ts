@@ -21,7 +21,7 @@ if (import.meta.main) {
     },
   });
 
-  const commandName = flags._[0];
+  const [commandName] = flags._;
 
   if (flags.v || flags.version) {
     inject(VersionCommand).handle();

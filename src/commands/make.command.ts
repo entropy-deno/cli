@@ -21,8 +21,7 @@ export class MakeCommand implements Command {
   private readonly logger = inject(Logger);
 
   public async handle(args: Args) {
-    const type = args._[1];
-    const name = args._[2];
+    const [, type, name] = args._;
 
     if (args.help) {
       this.logger.info(
