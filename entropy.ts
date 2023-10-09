@@ -21,10 +21,18 @@ if (import.meta.main) {
     },
   });
 
+  const commandName = flags._[0];
+
   if (flags.v || flags.version) {
     inject(VersionCommand).handle();
 
     Deno.exit();
+  }
+
+  if (!commandName) {
+    logger.error('No command or flag specified');
+
+    Deno.exit(1);
   }
 
   const commands: Record<string, Constructor<Command>> = {
@@ -39,7 +47,7 @@ if (import.meta.main) {
   };
 
   for (const [name, command] of Object.entries(commands)) {
-    if (flags._[0] === name) {
+    if (commandName === name) {
       const result = inject(command).handle(flags);
       const exitCode = result instanceof Promise ? await result : result;
 
@@ -47,7 +55,7 @@ if (import.meta.main) {
     }
   }
 
-  logger.error(`Unknown command: ${flags._[0]}`);
+  logger.error(`Unknown command: ${commandName}`);
 
   Deno.exit(1);
 }
