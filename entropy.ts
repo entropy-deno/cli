@@ -22,7 +22,7 @@ if (import.meta.main) {
   });
 
   if (flags.v || flags.version) {
-    new VersionCommand().handle();
+    inject(VersionCommand).handle();
 
     Deno.exit();
   }
@@ -40,7 +40,7 @@ if (import.meta.main) {
 
   for (const [name, command] of Object.entries(commands)) {
     if (flags._[0] === name) {
-      const result = new command().handle(flags);
+      const result = inject(command).handle(flags);
       const exitCode = result instanceof Promise ? await result : result;
 
       Deno.exit(exitCode ?? 0);
