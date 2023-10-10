@@ -1,8 +1,7 @@
 import { snakeCase } from 'https://deno.land/x/case@2.2.0/mod.ts';
-import {
-  inject,
-  Logger,
-} from 'https://deno.land/x/entropy@1.0.0-beta.4/src/mod.ts';
+import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.4/src/encrypter/encrypter.module.ts';
+import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.4/src/injector/injector.module.ts';
+import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.4/src/logger/logger.module.ts';
 import { readAll } from 'https://deno.land/std@0.203.0/streams/mod.ts';
 import { readerFromStreamReader } from 'https://deno.land/std@0.203.0/streams/mod.ts';
 import { Untar } from 'https://deno.land/std@0.203.0/archive/untar.ts';
@@ -24,6 +23,8 @@ interface Args {
   },
 })
 export class NewCommand implements CommandHandler {
+  private readonly encrypter = inject(Encrypter);
+
   private readonly logger = inject(Logger);
 
   public async handle(args: Args) {
@@ -92,6 +93,14 @@ export class NewCommand implements CommandHandler {
         await Deno.copyFile(
           `${envFile}.example`,
           envFile,
+        );
+
+        await Deno.writeTextFile(
+          envFile,
+          (await Deno.readTextFile(envFile)).replace(
+            /^ENCRYPTER_KEY=.*?$/m,
+            `ENCRYPTER_KEY=${this.encrypter.generateRandomString(32)}}`,
+          ),
         );
 
         if (args.mongodb) {

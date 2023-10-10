@@ -1,9 +1,7 @@
 import { pascalCase, snakeCase } from 'https://deno.land/x/case@2.2.0/mod.ts';
 import { plural } from 'https://deno.land/x/deno_plural@2.0.0/mod.ts';
-import {
-  inject,
-  Logger,
-} from 'https://deno.land/x/entropy@1.0.0-beta.4/src/mod.ts';
+import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.4/src/injector/injector.module.ts';
+import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.4/src/logger/logger.module.ts';
 import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 import { channelStub } from '../stubs/channel.stub.ts';
