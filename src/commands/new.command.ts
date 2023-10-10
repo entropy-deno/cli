@@ -6,13 +6,24 @@ import {
 import { readAll } from 'https://deno.land/std@0.203.0/streams/mod.ts';
 import { readerFromStreamReader } from 'https://deno.land/std@0.203.0/streams/mod.ts';
 import { Untar } from 'https://deno.land/std@0.203.0/archive/untar.ts';
-import { Command } from '../interfaces/command.interface.ts';
+import { Command } from '../decorators/command.decorator.ts';
+import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 
 interface Args {
   mongodb?: boolean;
 }
 
-export class NewCommand implements Command {
+@Command({
+  name: 'new',
+  aliases: ['create', 'c', 'n'],
+  args: {
+    boolean: ['mongodb'],
+    default: {
+      mongodb: false,
+    },
+  },
+})
+export class NewCommand implements CommandHandler {
   private readonly logger = inject(Logger);
 
   public async handle(args: Args) {
@@ -25,7 +36,7 @@ export class NewCommand implements Command {
     try {
       const res = await fetch(archiveUrl);
 
-      const streamReader = res.body?.pipeThrough(
+      const streamReader = res.body?.pipeThrough<Uint8Array>(
         new DecompressionStream('gzip'),
       )
         .getReader();

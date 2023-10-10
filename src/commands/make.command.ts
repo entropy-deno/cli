@@ -4,7 +4,8 @@ import {
   inject,
   Logger,
 } from 'https://deno.land/x/entropy@1.0.0-beta.4/src/mod.ts';
-import { Command } from '../interfaces/command.interface.ts';
+import { Command } from '../decorators/command.decorator.ts';
+import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 import { channelStub } from '../stubs/channel.stub.ts';
 import { controllerStub } from '../stubs/controller.stub.ts';
 import { middlewareStub } from '../stubs/middleware.stub.ts';
@@ -17,7 +18,17 @@ interface Args {
   help?: boolean;
 }
 
-export class MakeCommand implements Command {
+@Command({
+  name: 'make',
+  aliases: ['g', 'generate', 'm', 'make'],
+  args: {
+    boolean: ['help'],
+    default: {
+      help: false,
+    },
+  },
+})
+export class MakeCommand implements CommandHandler {
   private readonly logger = inject(Logger);
 
   public async handle(args: Args) {

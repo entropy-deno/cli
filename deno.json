@@ -12,6 +12,7 @@
   },
   "fmt": {
     "include": [
+      "entropy.ts",
       "init.ts",
       "src/",
       "*.md"
