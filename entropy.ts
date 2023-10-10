@@ -23,16 +23,10 @@ if (import.meta.main) {
 
   const [commandName] = flags._;
 
-  if (flags.v || flags.version) {
+  if (!commandName || flags.v || flags.version) {
     inject(VersionCommand).handle();
 
     Deno.exit();
-  }
-
-  if (!commandName) {
-    logger.error('No command or flag specified');
-
-    Deno.exit(1);
   }
 
   const commands: Record<string, Constructor<Command>> = {
