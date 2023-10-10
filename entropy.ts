@@ -59,10 +59,16 @@ if (import.meta.main) {
     ) {
       const flags = parseFlags(Deno.args, args);
 
-      const result = inject(command).handle(flags);
-      const exitCode = result instanceof Promise ? await result : result;
+      try {
+        const result = inject(command).handle(flags);
+        const exitCode = result instanceof Promise ? await result : result;
 
-      Deno.exit(exitCode ?? 0);
+        Deno.exit(exitCode ?? 0);
+      } catch {
+        logger.error(`An error occurred while executing the '${commandName}' command`);
+
+        Deno.exit(1);
+      }
     }
   }
 
