@@ -30,6 +30,8 @@ if (import.meta.main) {
   }
 
   const commands: Record<string, Constructor<Command>> = {
+    c: NewCommand,
+    create: NewCommand,
     g: MakeCommand,
     generate: MakeCommand,
     m: MakeCommand,
