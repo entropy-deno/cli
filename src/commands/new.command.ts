@@ -9,7 +9,9 @@ import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 
 interface Args {
+  _: string[];
   mongodb?: boolean;
+  name?: string;
 }
 
 @Command({
@@ -17,6 +19,7 @@ interface Args {
   aliases: ['create', 'c', 'n'],
   args: {
     boolean: ['mongodb'],
+    string: ['name'],
     default: {
       mongodb: false,
     },
@@ -32,7 +35,9 @@ export class NewCommand implements CommandHandler {
     const repositoryUrl = `https://github.com/entropy-deno/${repositoryName}`;
     const archiveUrl = `${repositoryUrl}/archive/refs/heads/main.tar.gz`;
 
-    const projectName = snakeCase(prompt('Project name: ') ?? 'entropy_app');
+    const projectName = snakeCase(
+      args._[1] ?? args.name ?? prompt('Project name: ') ?? 'entropy_app',
+    );
 
     try {
       const res = await fetch(archiveUrl);
