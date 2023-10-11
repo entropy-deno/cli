@@ -139,7 +139,7 @@ export class NewCommand implements CommandHandler {
         }
       }
     } catch {
-      this.logger.error('Connection failed');
+      this.logger.error('Downloading failed');
 
       return 1;
     }
