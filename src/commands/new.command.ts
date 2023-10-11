@@ -42,14 +42,14 @@ export class NewCommand implements CommandHandler {
     try {
       const res = await fetch(archiveUrl);
 
-      const streamReader = res.body?.pipeThrough<Uint8Array>(
+      const streamReader = res.body?.pipeThrough(
         new DecompressionStream('gzip'),
       )
         .getReader();
 
       if (streamReader) {
-        const denoReader = readerFromStreamReader(streamReader);
-        const untar = new Untar(denoReader);
+        const reader = readerFromStreamReader(streamReader);
+        const untar = new Untar(reader);
 
         await Deno.mkdir(`./${projectName}`, {
           recursive: true,
@@ -139,7 +139,7 @@ export class NewCommand implements CommandHandler {
         }
       }
     } catch {
-      this.logger.error('Downloading failed');
+      this.logger.error('Connection failed');
 
       return 1;
     }
