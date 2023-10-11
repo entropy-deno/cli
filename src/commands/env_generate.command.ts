@@ -15,19 +15,23 @@ export class EnvGenerateCommand implements CommandHandler {
   public async handle() {
     const envFile = './.env';
 
-    await Deno.copyFile(
-      `${envFile}.example`,
-      envFile,
-    );
+    try {
+      await Deno.copyFile(
+        `${envFile}.example`,
+        envFile,
+      );
 
-    await Deno.writeTextFile(
-      envFile,
-      (await Deno.readTextFile(envFile)).replace(
-        /^ENCRYPTER_KEY=.*?$/m,
-        `ENCRYPTER_KEY=${this.encrypter.generateRandomString(32)}}`,
-      ),
-    );
+      this.logger.info('Generated .env file');
+    } finally {
+      await Deno.writeTextFile(
+        envFile,
+        (await Deno.readTextFile(envFile)).replace(
+          /^ENCRYPTER_KEY=.*?$/m,
+          `ENCRYPTER_KEY=${this.encrypter.generateRandomString(32)}}`,
+        ),
+      );
 
-    this.logger.info('Generated .env file');
+      this.logger.info('Generated encrypter key');
+    }
   }
 }

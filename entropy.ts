@@ -65,7 +65,9 @@ if (import.meta.main) {
 
         Deno.exit(exitCode ?? 0);
       } catch {
-        logger.error(`An error occurred while executing the '${commandName}' command`);
+        logger.error(
+          `An error occurred while executing the '${commandName}' command`,
+        );
 
         Deno.exit(1);
       }
