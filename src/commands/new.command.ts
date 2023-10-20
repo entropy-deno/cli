@@ -39,7 +39,11 @@ export class NewCommand implements CommandHandler {
       args._[1] ?? args.name ?? prompt('Project name: ') ?? 'entropy_app',
     );
 
+    this.logger.info(`Creating project ${projectName}...`);
+
     try {
+      this.logger.info('Downloading files...');
+
       const res = await fetch(archiveUrl);
 
       const streamReader = res.body?.pipeThrough(
@@ -93,6 +97,8 @@ export class NewCommand implements CommandHandler {
           await Deno.writeTextFile(filePath, textContent);
         }
 
+        this.logger.info('Preparing environment...');
+
         const envFile = `./${projectName}/.env`;
 
         await Deno.copyFile(
@@ -138,6 +144,8 @@ export class NewCommand implements CommandHandler {
           );
         }
       }
+
+      this.logger.info(`Project ${projectName} created successfully!`);
     } catch {
       this.logger.error('Connection failed');
 
