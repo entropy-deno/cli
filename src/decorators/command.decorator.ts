@@ -1,4 +1,4 @@
-import { Reflector } from 'https://deno.land/x/entropy@1.0.0-beta.4/src/utils/utils.module.ts';
+import { Reflector } from 'https://deno.land/x/entropy@1.0.0-beta.5/src/utils/utils.module.ts';
 
 interface Options {
   aliases?: string[];

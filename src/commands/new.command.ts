@@ -1,7 +1,7 @@
 import { snakeCase } from 'https://deno.land/x/case@2.2.0/mod.ts';
-import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.4/src/encrypter/encrypter.module.ts';
-import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.4/src/injector/injector.module.ts';
-import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.4/src/logger/logger.module.ts';
+import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.5/src/encrypter/encrypter.module.ts';
+import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.5/src/injector/injector.module.ts';
+import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.5/src/logger/logger.module.ts';
 import { readAll } from 'https://deno.land/std@0.204.0/streams/mod.ts';
 import { readerFromStreamReader } from 'https://deno.land/std@0.204.0/streams/mod.ts';
 import { Untar } from 'https://deno.land/std@0.204.0/archive/untar.ts';
