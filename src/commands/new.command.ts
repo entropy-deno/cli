@@ -70,6 +70,7 @@ export class NewCommand implements CommandHandler {
           if (fileName === `${archiveName}/`) {
             continue;
           }
+
           for (const ommitedFile of ommitedFiles) {
             if (fileName.includes(ommitedFile)) {
               continue fileEntryLoop;
