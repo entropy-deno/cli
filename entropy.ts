@@ -6,11 +6,27 @@ import { Reflector } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/utils/ut
 import { CommandHandler } from './src/interfaces/command_handler.interface.ts';
 import { EnvGenerateCommand } from './src/commands/env_generate.command.ts';
 import { MakeCommand } from './src/commands/make.command.ts';
+import { MIN_DENO_VERSION } from './src/constants.ts';
 import { NewCommand } from './src/commands/new.command.ts';
 import { VersionCommand } from './src/commands/version.command.ts';
 
 if (import.meta.main) {
   const logger = inject(Logger);
+
+  const satisfiesDenoVersion = Deno.version.deno
+    .localeCompare(MIN_DENO_VERSION, undefined, {
+      numeric: true,
+      sensitivity: 'base',
+    });
+
+  if (satisfiesDenoVersion === -1) {
+    logger.warn([
+      `Entropy requires Deno version ${MIN_DENO_VERSION} or higher`,
+      `Run 'deno upgrade' to update Deno executable`,
+    ]);
+
+    Deno.exit(1);
+  }
 
   const globalFlags = parseFlags(Deno.args, {
     boolean: ['h', 'help', 'v', 'version'],
