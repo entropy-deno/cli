@@ -6,14 +6,14 @@ import { Reflector } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/utils/ut
 import { CommandHandler } from './src/interfaces/command_handler.interface.ts';
 import { EnvGenerateCommand } from './src/commands/env_generate.command.ts';
 import { MakeCommand } from './src/commands/make.command.ts';
-import { MIN_DENO_VERSION } from './src/constants.ts';
+import { DENO_VERSION, MIN_DENO_VERSION } from './src/constants.ts';
 import { NewCommand } from './src/commands/new.command.ts';
 import { VersionCommand } from './src/commands/version.command.ts';
 
 if (import.meta.main) {
   const logger = inject(Logger);
 
-  const satisfiesDenoVersion = Deno.version.deno
+  const satisfiesDenoVersion = DENO_VERSION
     .localeCompare(MIN_DENO_VERSION, undefined, {
       numeric: true,
       sensitivity: 'base',
