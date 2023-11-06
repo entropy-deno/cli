@@ -1,5 +1,5 @@
-import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.5/src/injector/injector.module.ts';
-import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.5/src/logger/logger.module.ts';
+import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/injector/injector.module.ts';
+import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/logger/logger.module.ts';
 import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 import { VERSION } from '../constants.ts';
