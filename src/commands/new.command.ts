@@ -9,7 +9,7 @@ import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 
 interface Args {
-  _: string[];
+  _: (string | number)[];
   mongodb?: boolean;
   name?: string;
 }
@@ -36,7 +36,8 @@ export class NewCommand implements CommandHandler {
     const archiveUrl = `${repositoryUrl}/archive/refs/heads/main.tar.gz`;
 
     const projectName = snakeCase(
-      args._[1] ?? args.name ?? prompt('Project name: ') ?? 'entropy_app',
+      args._[1].toString() ?? args.name ?? prompt('Project name: ') ??
+        'entropy_app',
     );
 
     this.logger.info(`Creating project ${projectName}...`);

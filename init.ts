@@ -3,6 +3,7 @@ import { NewCommand } from './src/commands/new.command.ts';
 
 const args = parseArgs(Deno.args, {
   boolean: ['mongodb'],
+  string: ['name'],
   default: {
     mongodb: false,
   },
