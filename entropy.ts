@@ -1,3 +1,4 @@
+import { closestString } from 'https://deno.land/std@0.207.0/text/closest_string.ts';
 import { parseArgs } from 'https://deno.land/std@0.207.0/cli/parse_args.ts';
 import { Constructor } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/utils/utils.module.ts';
 import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/injector/injector.module.ts';
@@ -38,7 +39,7 @@ if (import.meta.main) {
     },
   });
 
-  const [commandName] = globalArgs._;
+  const commandName = globalArgs._[0].toString();
 
   if (
     !commandName ||
@@ -57,6 +58,10 @@ if (import.meta.main) {
     VersionCommand,
   ];
 
+  const commandNames = commands.map((command) =>
+    Reflector.getMetadata<{ name: string }>('options', command)?.name
+  ).filter((name) => !!name) as string[];
+
   for (const command of commands) {
     const { aliases, args, name } = Reflector.getMetadata<
       {
@@ -73,10 +78,8 @@ if (import.meta.main) {
     if (
       name === commandName || (aliases ?? []).includes(commandName as string)
     ) {
-      const flags = parseFlags(Deno.args, args);
-
       try {
-        const result = inject(command).handle(flags);
+        const result = inject(command).handle(parseArgs(Deno.args, args));
         const exitCode = result instanceof Promise ? await result : result;
 
         Deno.exit(exitCode ?? 0);
@@ -90,7 +93,11 @@ if (import.meta.main) {
     }
   }
 
-  logger.error(`Unknown command: ${commandName}`);
+  logger.error(
+    `Unknown command: '${commandName}'. Did you mean '${
+      closestString(commandName, commandNames)
+    }'?`,
+  );
 
   Deno.exit(1);
 }

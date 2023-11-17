@@ -215,9 +215,10 @@ export class MakeCommand implements CommandHandler {
       }
 
       default: {
-        this.logger.error('Invalid <file_type> argument', {
-          additionalInfo: `Run 'entropy make --help' for more information`,
-        });
+        this.logger.error([
+          'Invalid <file_type> argument',
+          `Run 'entropy make --help' for more information`,
+        ]);
 
         Deno.exit(1);
       }
