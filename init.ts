@@ -1,7 +1,7 @@
-import { parse as parseFlags } from 'https://deno.land/std@0.205.0/flags/mod.ts';
+import { parseArgs } from 'https://deno.land/std@0.207.0/cli/parse_args.ts';
 import { NewCommand } from './src/commands/new.command.ts';
 
-const flags = parseFlags(Deno.args, {
+const args = parseArgs(Deno.args, {
   boolean: ['mongodb'],
   default: {
     mongodb: false,
@@ -9,5 +9,5 @@ const flags = parseFlags(Deno.args, {
 });
 
 if (import.meta.main) {
-  Deno.exit(await new NewCommand().handle(flags) ?? 0);
+  Deno.exit(await new NewCommand().handle(args) ?? 0);
 }

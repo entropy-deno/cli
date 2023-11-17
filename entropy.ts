@@ -1,4 +1,4 @@
-import { parse as parseFlags } from 'https://deno.land/std@0.205.0/flags/mod.ts';
+import { parseArgs } from 'https://deno.land/std@0.207.0/cli/parse_args.ts';
 import { Constructor } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/utils/utils.module.ts';
 import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/injector/injector.module.ts';
 import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/logger/logger.module.ts';
@@ -28,7 +28,7 @@ if (import.meta.main) {
     Deno.exit(1);
   }
 
-  const globalFlags = parseFlags(Deno.args, {
+  const globalArgs = parseArgs(Deno.args, {
     boolean: ['h', 'help', 'v', 'version'],
     default: {
       h: false,
@@ -38,11 +38,11 @@ if (import.meta.main) {
     },
   });
 
-  const [commandName] = globalFlags._;
+  const [commandName] = globalArgs._;
 
   if (
     !commandName ||
-    [globalFlags.h, globalFlags.help, globalFlags.v, globalFlags.version]
+    [globalArgs.h, globalArgs.help, globalArgs.v, globalArgs.version]
       .includes(true)
   ) {
     inject(VersionCommand).handle();
