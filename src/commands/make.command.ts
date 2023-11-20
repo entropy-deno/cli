@@ -13,15 +13,17 @@ import { testStub } from '../stubs/test.stub.ts';
 
 interface Args {
   _: string[];
+  h?: boolean;
   help?: boolean;
 }
 
 @Command({
   name: 'make',
-  aliases: ['g', 'generate', 'm', 'make'],
+  aliases: ['g', 'generate', 'h', 'help', 'm', 'make'],
   args: {
     boolean: ['help'],
     default: {
+      h: false,
       help: false,
     },
   },
@@ -29,48 +31,51 @@ interface Args {
 export class MakeCommand implements CommandHandler {
   private readonly logger = inject(Logger);
 
+  private displayHelp(): void {
+    this.logger.info('Role: Generate new source file\n');
+
+    this.logger.info('Usage: %c$ %centropy make %c<type> <name>', {
+      colors: ['gray', 'green', 'gray'],
+    });
+
+    this.logger.info('File type options:');
+
+    this.logger.table([
+      {
+        type: 'channel',
+        description: 'Create new WebSocket channel',
+      },
+      {
+        type: 'controller',
+        description: 'Create new controller',
+      },
+      {
+        type: 'middleware',
+        description: 'Create new HTTP middleware',
+      },
+      {
+        type: 'module',
+        description: 'Create new application module',
+      },
+      {
+        type: 'service',
+        description: 'Create new service class',
+      },
+      {
+        type: 'test',
+        description: 'Create new module test',
+      },
+    ]);
+  }
+
   public async handle(args: Args) {
-    const [, type, name] = args._;
+    if (args.h || args.help) {
+      this.displayHelp();
 
-    if (args.help) {
-      this.logger.info(
-        'Usage: %c$ %centropy make %c<file_type> <name>',
-        {
-          colors: ['gray', 'white', 'gray'],
-        },
-      );
-
-      this.logger.info('Available options:');
-
-      this.logger.table([
-        {
-          type: 'channel',
-          description: 'Create new WebSocket channel',
-        },
-        {
-          type: 'controller',
-          description: 'Create new controller',
-        },
-        {
-          type: 'middleware',
-          description: 'Create new HTTP middleware',
-        },
-        {
-          type: 'module',
-          description: 'Create new application module',
-        },
-        {
-          type: 'service',
-          description: 'Create new service class',
-        },
-        {
-          type: 'test',
-          description: 'Create new module test',
-        },
-      ]);
-
-      return;
+      return 0;
     }
+
+    const [, type, name] = args._;
 
     if (!name) {
       this.logger.error('The <name> argument is required');

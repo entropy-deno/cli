@@ -10,6 +10,8 @@ import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 
 interface Args {
   _: (string | number)[];
+  h?: boolean;
+  help?: boolean;
   mongodb?: boolean;
   name?: string;
 }
@@ -18,9 +20,11 @@ interface Args {
   name: 'new',
   aliases: ['create', 'c', 'n'],
   args: {
-    boolean: ['mongodb'],
+    boolean: ['h', 'help', 'mongodb'],
     string: ['name'],
     default: {
+      h: false,
+      help: false,
       mongodb: false,
     },
   },
@@ -30,13 +34,34 @@ export class NewCommand implements CommandHandler {
 
   private readonly logger = inject(Logger);
 
+  private displayHelp(): void {
+    this.logger.info('Role: Create a new Entropy project\n');
+
+    this.logger.info('Usage: %c$ %centropy new %c<name>', {
+      colors: ['gray', 'green', 'gray'],
+    });
+
+    this.logger.info(
+      'Options: %c--mongodb [set up MongoDB in project database migrations]',
+      {
+        colors: ['gray'],
+      },
+    );
+  }
+
   public async handle(args: Args) {
+    if (args.h || args.help) {
+      this.displayHelp();
+
+      return 0;
+    }
+
     const repositoryName = 'app-template';
     const repositoryUrl = `https://github.com/entropy-deno/${repositoryName}`;
     const archiveUrl = `${repositoryUrl}/archive/refs/heads/main.tar.gz`;
 
     const projectName = snakeCase(
-      args._[1].toString() ?? args.name ?? prompt('Project name: ') ??
+      args._[1]?.toString() ?? args.name ?? prompt('Project name: ') ??
         'entropy_app',
     );
 

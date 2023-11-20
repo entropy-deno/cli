@@ -39,12 +39,13 @@ if (import.meta.main) {
     },
   });
 
-  const commandName = globalArgs._[0].toString();
+  const commandName = globalArgs._[0]?.toString();
 
   if (
     !commandName ||
-    [globalArgs.h, globalArgs.help, globalArgs.v, globalArgs.version]
-      .includes(true)
+    (!commandName &&
+      [globalArgs.h, globalArgs.help, globalArgs.v, globalArgs.version]
+        .includes(true))
   ) {
     inject(VersionCommand).handle();
 
