@@ -50,6 +50,10 @@ export class MakeCommand implements CommandHandler {
 
     this.logger.table([
       {
+        type: 'all',
+        description: 'Create all available source files',
+      },
+      {
         type: 'channel',
         description: 'Create new WebSocket channel',
       },
@@ -216,6 +220,17 @@ export class MakeCommand implements CommandHandler {
     this.moduleName = plural(snakeCase(this.name));
 
     switch (this.type) {
+      case 'all': {
+        await this.createChannel();
+        await this.createController();
+        await this.createMiddleware();
+        await this.createModule();
+        await this.createService();
+        await this.createTest();
+
+        break;
+      }
+
       case 'channel': {
         await this.createChannel();
 
