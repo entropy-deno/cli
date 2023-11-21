@@ -225,7 +225,7 @@ export class MakeCommand implements CommandHandler {
         `Run 'entropy make --help' for more information`,
       ]);
 
-      Deno.exit(1);
+      return 1;
     }
 
     this.fileName = snakeCase(this.name);
@@ -285,7 +285,7 @@ export class MakeCommand implements CommandHandler {
           `Run 'entropy make --help' for more information`,
         ]);
 
-        Deno.exit(1);
+        return 1;
       }
     }
 
