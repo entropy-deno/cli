@@ -1,12 +1,12 @@
 import { pascalCase, snakeCase } from 'https://deno.land/x/case@2.2.0/mod.ts';
-import { plural, singular } from 'https://deno.land/x/deno_plural@2.0.0/mod.ts';
+import { plural } from 'https://deno.land/x/deno_plural@2.0.0/mod.ts';
 import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/injector/injector.module.ts';
 import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/logger/logger.module.ts';
 import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 import { channelStub } from '../stubs/channel.stub.ts';
-import { controllerStub } from '../stubs/controller.stub.ts';
 import { controllerCrudStub } from '../stubs/controller_crud.stub.ts';
+import { controllerStub } from '../stubs/controller.stub.ts';
 import { middlewareStub } from '../stubs/middleware.stub.ts';
 import { moduleStub } from '../stubs/module.stub.ts';
 import { serviceStub } from '../stubs/service.stub.ts';
