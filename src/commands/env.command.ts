@@ -11,8 +11,7 @@ interface Args {
 }
 
 @Command({
-  name: 'env:generate',
-  aliases: ['env:g'],
+  name: 'env',
   args: {
     boolean: ['h', 'help'],
     default: {
@@ -21,7 +20,7 @@ interface Args {
     },
   },
 })
-export class EnvGenerateCommand implements CommandHandler {
+export class EnvCommand implements CommandHandler {
   private readonly encrypter = inject(Encrypter);
 
   private readonly logger = inject(Logger);
@@ -34,13 +33,7 @@ export class EnvGenerateCommand implements CommandHandler {
     });
   }
 
-  public async handle(args: Args) {
-    if (args.h || args.help) {
-      this.displayHelp();
-
-      return 0;
-    }
-
+  private async prepare(): Promise<void> {
     const envFile = './.env';
 
     try {
@@ -59,7 +52,30 @@ export class EnvGenerateCommand implements CommandHandler {
         ),
       );
 
-      this.logger.info('Generated encrypter key');
+      this.logger.info('Generated safe encrypter key');
+    }
+  }
+
+  public async handle(args: Args) {
+    if (args.h || args.help) {
+      this.displayHelp();
+
+      return 0;
+    }
+
+    switch (args._[0]) {
+      case 'generate':
+      case 'prepare':
+        await this.prepare();
+
+        break;
+      default:
+        this.logger.error([
+          `Invalid 'env' command action`,
+          `Run 'entropy env --help' for more information`,
+        ]);
+
+        return 1;
     }
   }
 }

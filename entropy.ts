@@ -5,7 +5,7 @@ import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/injector/in
 import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/logger/logger.module.ts';
 import { Reflector } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/utils/utils.module.ts';
 import { CommandHandler } from './src/interfaces/command_handler.interface.ts';
-import { EnvGenerateCommand } from './src/commands/env_generate.command.ts';
+import { EnvCommand } from './src/commands/env.command.ts';
 import { MakeCommand } from './src/commands/make.command.ts';
 import { DENO_VERSION, MIN_DENO_VERSION } from './src/constants.ts';
 import { NewCommand } from './src/commands/new.command.ts';
@@ -53,7 +53,7 @@ if (import.meta.main) {
   }
 
   const commands: Constructor<CommandHandler>[] = [
-    EnvGenerateCommand,
+    EnvCommand,
     MakeCommand,
     NewCommand,
     VersionCommand,
