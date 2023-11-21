@@ -14,7 +14,7 @@ interface Args {
   name: 'env:generate',
   aliases: ['env:g'],
   args: {
-    boolean: ['help'],
+    boolean: ['h', 'help'],
     default: {
       h: false,
       help: false,

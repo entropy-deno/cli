@@ -1,11 +1,12 @@
 import { pascalCase, snakeCase } from 'https://deno.land/x/case@2.2.0/mod.ts';
-import { plural } from 'https://deno.land/x/deno_plural@2.0.0/mod.ts';
+import { plural, singular } from 'https://deno.land/x/deno_plural@2.0.0/mod.ts';
 import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/injector/injector.module.ts';
 import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/logger/logger.module.ts';
 import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 import { channelStub } from '../stubs/channel.stub.ts';
 import { controllerStub } from '../stubs/controller.stub.ts';
+import { controllerCrudStub } from '../stubs/controller_crud.stub.ts';
 import { middlewareStub } from '../stubs/middleware.stub.ts';
 import { moduleStub } from '../stubs/module.stub.ts';
 import { serviceStub } from '../stubs/service.stub.ts';
@@ -13,22 +14,26 @@ import { testStub } from '../stubs/test.stub.ts';
 
 interface Args {
   _: string[];
+  crud?: boolean;
   h?: boolean;
   help?: boolean;
 }
 
 @Command({
   name: 'make',
-  aliases: ['g', 'generate', 'h', 'help', 'm', 'make'],
+  aliases: ['g', 'generate', 'm', 'make'],
   args: {
-    boolean: ['help'],
+    boolean: ['crud', 'h', 'help'],
     default: {
+      crud: false,
       h: false,
       help: false,
     },
   },
 })
 export class MakeCommand implements CommandHandler {
+  private args!: Args;
+
   private readonly logger = inject(Logger);
 
   private fileName?: string;
@@ -116,7 +121,10 @@ export class MakeCommand implements CommandHandler {
 
     await Deno.writeTextFile(
       `${path}/${this.fileName}.controller.ts`,
-      controllerStub(className, plural(snakeCase(this.name!))),
+      (this.args.crud ? controllerCrudStub : controllerStub)(
+        className,
+        plural(snakeCase(this.name!)),
+      ),
     );
   }
 
@@ -207,6 +215,7 @@ export class MakeCommand implements CommandHandler {
       return 0;
     }
 
+    this.args = args;
     this.type = args._[1];
     this.name = args._[2];
 
