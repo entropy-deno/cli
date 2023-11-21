@@ -36,11 +36,11 @@ export class MakeCommand implements CommandHandler {
 
   private readonly logger = inject(Logger);
 
-  private fileName?: string;
+  private fileName!: string;
 
   private moduleName?: string;
 
-  private name?: string;
+  private name!: string;
 
   private type?: string;
 
@@ -86,7 +86,7 @@ export class MakeCommand implements CommandHandler {
   }
 
   private async createChannel(): Promise<void> {
-    const className = `${pascalCase(this.name!)}Channel`;
+    const className = `${pascalCase(this.name)}Channel`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -101,12 +101,12 @@ export class MakeCommand implements CommandHandler {
 
     await Deno.writeTextFile(
       `${path}/${this.fileName}.channel.ts`,
-      channelStub(className, plural(snakeCase(this.name!))),
+      channelStub(className, plural(snakeCase(this.name))),
     );
   }
 
   private async createController(): Promise<void> {
-    const className = `${pascalCase(this.name!)}Controller`;
+    const className = `${pascalCase(this.name)}Controller`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -123,13 +123,13 @@ export class MakeCommand implements CommandHandler {
       `${path}/${this.fileName}.controller.ts`,
       (this.args.crud ? controllerCrudStub : controllerStub)(
         className,
-        plural(snakeCase(this.name!)),
+        plural(snakeCase(this.name)),
       ),
     );
   }
 
   private async createMiddleware(): Promise<void> {
-    const className = `${pascalCase(this.name!)}Middleware`;
+    const className = `${pascalCase(this.name)}Middleware`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -149,7 +149,7 @@ export class MakeCommand implements CommandHandler {
   }
 
   private async createModule(): Promise<void> {
-    const className = `${pascalCase(this.name!)}Module`;
+    const className = `${pascalCase(this.name)}Module`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -169,7 +169,7 @@ export class MakeCommand implements CommandHandler {
   }
 
   private async createService(): Promise<void> {
-    const className = `${pascalCase(this.name!)}Service`;
+    const className = `${pascalCase(this.name)}Service`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -184,12 +184,12 @@ export class MakeCommand implements CommandHandler {
 
     await Deno.writeTextFile(
       `${path}/${this.fileName}.service.ts`,
-      serviceStub(className, `get${plural(pascalCase(this.name!))}`),
+      serviceStub(className, `get${plural(pascalCase(this.name))}`),
     );
   }
 
   private async createTest(): Promise<void> {
-    const className = `${pascalCase(this.name!)}Module`;
+    const className = `${pascalCase(this.name)}Module`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -204,7 +204,7 @@ export class MakeCommand implements CommandHandler {
 
     await Deno.writeTextFile(
       `${path}/${this.fileName}.test.ts`,
-      testStub(className, plural(snakeCase(this.name!))),
+      testStub(className, plural(snakeCase(this.name))),
     );
   }
 
@@ -216,13 +216,16 @@ export class MakeCommand implements CommandHandler {
     }
 
     this.args = args;
-    this.type = args._[1];
-    this.name = args._[2];
+    this.type = args._[1] ?? prompt('File type: ');
+    this.name = args._[2] ?? prompt('File name: ');
 
     if (!this.name) {
-      this.logger.error('The <name> argument is required');
+      this.logger.error([
+        'Invalid name',
+        `Run 'entropy make --help' for more information`,
+      ]);
 
-      return;
+      Deno.exit(1);
     }
 
     this.fileName = snakeCase(this.name);
@@ -278,7 +281,7 @@ export class MakeCommand implements CommandHandler {
 
       default: {
         this.logger.error([
-          'Invalid <file_type> argument',
+          'Invalid <type> argument',
           `Run 'entropy make --help' for more information`,
         ]);
 
