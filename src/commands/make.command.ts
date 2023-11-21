@@ -31,6 +31,14 @@ interface Args {
 export class MakeCommand implements CommandHandler {
   private readonly logger = inject(Logger);
 
+  private fileName?: string;
+
+  private moduleName?: string;
+
+  private name?: string;
+
+  private type?: string;
+
   private displayHelp(): void {
     this.logger.info('Role: Generate new source file\n');
 
@@ -68,6 +76,126 @@ export class MakeCommand implements CommandHandler {
     ]);
   }
 
+  private async createChannel(): Promise<void> {
+    const className = `${pascalCase(this.name!)}Channel`;
+    const path = `${Deno.cwd()}/src/${this.moduleName}`;
+
+    try {
+      await Deno.mkdir(path, {
+        recursive: true,
+      });
+    } catch (error) {
+      if (!(error instanceof Deno.errors.AlreadyExists)) {
+        throw error;
+      }
+    }
+
+    await Deno.writeTextFile(
+      `${path}/${this.fileName}.channel.ts`,
+      channelStub(className, plural(snakeCase(this.name!))),
+    );
+  }
+
+  private async createController(): Promise<void> {
+    const className = `${pascalCase(this.name!)}Controller`;
+    const path = `${Deno.cwd()}/src/${this.moduleName}`;
+
+    try {
+      await Deno.mkdir(path, {
+        recursive: true,
+      });
+    } catch (error) {
+      if (!(error instanceof Deno.errors.AlreadyExists)) {
+        throw error;
+      }
+    }
+
+    await Deno.writeTextFile(
+      `${path}/${this.fileName}.controller.ts`,
+      controllerStub(className, plural(snakeCase(this.name!))),
+    );
+  }
+
+  private async createMiddleware(): Promise<void> {
+    const className = `${pascalCase(this.name!)}Middleware`;
+    const path = `${Deno.cwd()}/src/${this.moduleName}`;
+
+    try {
+      await Deno.mkdir(path, {
+        recursive: true,
+      });
+    } catch (error) {
+      if (!(error instanceof Deno.errors.AlreadyExists)) {
+        throw error;
+      }
+    }
+
+    await Deno.writeTextFile(
+      `${path}/${this.fileName}.middleware.ts`,
+      middlewareStub(className),
+    );
+  }
+
+  private async createModule(): Promise<void> {
+    const className = `${pascalCase(this.name!)}Module`;
+    const path = `${Deno.cwd()}/src/${this.moduleName}`;
+
+    try {
+      await Deno.mkdir(path, {
+        recursive: true,
+      });
+    } catch (error) {
+      if (!(error instanceof Deno.errors.AlreadyExists)) {
+        throw error;
+      }
+    }
+
+    await Deno.writeTextFile(
+      `${path}/${this.fileName}.module.ts`,
+      moduleStub(className),
+    );
+  }
+
+  private async createService(): Promise<void> {
+    const className = `${pascalCase(this.name!)}Service`;
+    const path = `${Deno.cwd()}/src/${this.moduleName}`;
+
+    try {
+      await Deno.mkdir(path, {
+        recursive: true,
+      });
+    } catch (error) {
+      if (!(error instanceof Deno.errors.AlreadyExists)) {
+        throw error;
+      }
+    }
+
+    await Deno.writeTextFile(
+      `${path}/${this.fileName}.service.ts`,
+      serviceStub(className, `get${plural(pascalCase(this.name!))}`),
+    );
+  }
+
+  private async createTest(): Promise<void> {
+    const className = `${pascalCase(this.name!)}Module`;
+    const path = `${Deno.cwd()}/src/${this.moduleName}`;
+
+    try {
+      await Deno.mkdir(path, {
+        recursive: true,
+      });
+    } catch (error) {
+      if (!(error instanceof Deno.errors.AlreadyExists)) {
+        throw error;
+      }
+    }
+
+    await Deno.writeTextFile(
+      `${path}/${this.fileName}.test.ts`,
+      testStub(className, plural(snakeCase(this.name!))),
+    );
+  }
+
   public async handle(args: Args) {
     if (args.h || args.help) {
       this.displayHelp();
@@ -75,146 +203,51 @@ export class MakeCommand implements CommandHandler {
       return 0;
     }
 
-    const [, type, name] = args._;
+    this.type = args._[1];
+    this.name = args._[2];
 
-    if (!name) {
+    if (!this.name) {
       this.logger.error('The <name> argument is required');
 
       return;
     }
 
-    const fileName = snakeCase(name);
-    const moduleName = plural(snakeCase(name));
+    this.fileName = snakeCase(this.name);
+    this.moduleName = plural(snakeCase(this.name));
 
-    switch (type) {
+    switch (this.type) {
       case 'channel': {
-        const className = `${pascalCase(name)}Channel`;
-        const path = `${Deno.cwd()}/src/${moduleName}`;
-
-        try {
-          await Deno.mkdir(path, {
-            recursive: true,
-          });
-        } catch (error) {
-          if (!(error instanceof Deno.errors.AlreadyExists)) {
-            throw error;
-          }
-        }
-
-        await Deno.writeTextFile(
-          `${path}/${fileName}.channel.ts`,
-          channelStub(className, plural(snakeCase(name))),
-        );
+        await this.createChannel();
 
         break;
       }
 
       case 'controller': {
-        const className = `${pascalCase(name)}Controller`;
-        const path = `${Deno.cwd()}/src/${moduleName}`;
-
-        try {
-          await Deno.mkdir(path, {
-            recursive: true,
-          });
-        } catch (error) {
-          if (!(error instanceof Deno.errors.AlreadyExists)) {
-            throw error;
-          }
-        }
-
-        await Deno.writeTextFile(
-          `${path}/${fileName}.controller.ts`,
-          controllerStub(className, plural(snakeCase(name))),
-        );
+        await this.createController();
 
         break;
       }
 
       case 'middleware': {
-        const className = `${pascalCase(name)}Middleware`;
-        const path = `${Deno.cwd()}/src/${moduleName}`;
-
-        try {
-          await Deno.mkdir(path, {
-            recursive: true,
-          });
-        } catch (error) {
-          if (!(error instanceof Deno.errors.AlreadyExists)) {
-            throw error;
-          }
-        }
-
-        await Deno.writeTextFile(
-          `${path}/${fileName}.middleware.ts`,
-          middlewareStub(className),
-        );
+        await this.createMiddleware();
 
         break;
       }
 
       case 'module': {
-        const className = `${pascalCase(name)}Module`;
-        const path = `${Deno.cwd()}/src/${moduleName}`;
-
-        try {
-          await Deno.mkdir(path, {
-            recursive: true,
-          });
-        } catch (error) {
-          if (!(error instanceof Deno.errors.AlreadyExists)) {
-            throw error;
-          }
-        }
-
-        await Deno.writeTextFile(
-          `${path}/${fileName}.module.ts`,
-          moduleStub(className),
-        );
+        await this.createModule();
 
         break;
       }
 
       case 'service': {
-        const className = `${pascalCase(name)}Service`;
-        const path = `${Deno.cwd()}/src/${moduleName}`;
-
-        try {
-          await Deno.mkdir(path, {
-            recursive: true,
-          });
-        } catch (error) {
-          if (!(error instanceof Deno.errors.AlreadyExists)) {
-            throw error;
-          }
-        }
-
-        await Deno.writeTextFile(
-          `${path}/${fileName}.service.ts`,
-          serviceStub(className, `get${plural(pascalCase(name))}`),
-        );
+        await this.createService();
 
         break;
       }
 
       case 'test': {
-        const className = `${pascalCase(name)}Module`;
-        const path = `${Deno.cwd()}/src/${moduleName}`;
-
-        try {
-          await Deno.mkdir(path, {
-            recursive: true,
-          });
-        } catch (error) {
-          if (!(error instanceof Deno.errors.AlreadyExists)) {
-            throw error;
-          }
-        }
-
-        await Deno.writeTextFile(
-          `${path}/${fileName}.test.ts`,
-          testStub(className, plural(snakeCase(name))),
-        );
+        await this.createTest();
 
         break;
       }
@@ -229,6 +262,6 @@ export class MakeCommand implements CommandHandler {
       }
     }
 
-    this.logger.info(`Created new ${type} ${name}`);
+    this.logger.info(`Created new ${this.type} ${this.name}`);
   }
 }
