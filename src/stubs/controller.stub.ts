@@ -4,8 +4,8 @@ import { Route } from '@entropy/router';
 
 export class ${className} extends Controller {
   @Route.Get('/${slug}')
-  public index() {
-    return this.render('${slug}/index');
+  public async index() {
+    return await this.render('${slug}/index');
   }
 }
 `;
