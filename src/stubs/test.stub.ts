@@ -1,5 +1,5 @@
 export const testStub = (className: string, name: string) => {
-  return `import { assertStringIncludes } from '@std/assert/mod.ts';
+  return `import { expect } from 'https://deno.land/std@0.208.0/expect/expect.ts';
   import { fetchRoute } from '@entropy/testing';
   import { ${className} } from './${name}.controller.ts';
   
@@ -7,7 +7,7 @@ export const testStub = (className: string, name: string) => {
     await test.step('${name} controller works', async () => {
       const responseContent = await fetchRoute('/${name}', ${className});
   
-      assertStringIncludes(responseContent, 'Hello, world!');
+      expect(responseContent).toContain('Hello, world!');
     });
   });  
 `;
