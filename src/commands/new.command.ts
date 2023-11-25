@@ -56,7 +56,7 @@ export class NewCommand implements CommandHandler {
       return 0;
     }
 
-    const repositoryName = 'app-template';
+    const repositoryName = 'skeleton';
     const repositoryUrl = `https://github.com/entropy-deno/${repositoryName}`;
     const archiveUrl = `${repositoryUrl}/archive/refs/heads/main.tar.gz`;
 
