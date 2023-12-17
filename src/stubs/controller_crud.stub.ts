@@ -1,5 +1,5 @@
 export const controllerCrudStub = (className: string, slug: string) => {
-  return `import { Controller } from '@entropy/http';
+  return `import { Controller, HttpRequest } from '@entropy/http';
 import { Route } from '@entropy/router';
 
 export class ${className} extends Controller {
@@ -14,7 +14,7 @@ export class ${className} extends Controller {
   }
 
   @Route.Post('/${slug}')
-  public store() {
+  public store([], request: HttpRequest) {
     // 
   }
 
@@ -33,12 +33,12 @@ export class ${className} extends Controller {
   }
 
   @Route.Patch('/${slug}/:id')
-  public update([id]: [string]) {
+  public update([id]: [string], request: HttpRequest) {
     // 
   }
 
   @Route.Delete('/${slug}/:id')
-  public destroy([id]: [string]) {
+  public destroy([id]: [string], request: HttpRequest) {
     // 
   }
 }
