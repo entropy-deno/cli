@@ -1,6 +1,6 @@
 export const controllerCrudStub = (className: string, slug: string) => {
-  return `import { Controller, HttpRequest } from '@entropy/http';
-import { Route } from '@entropy/router';
+  return `import { HttpRequest } from '@entropy/http';
+import { Controller, Route } from '@entropy/router';
 
 export class ${className} extends Controller {
   @Route.Get('/${slug}')
