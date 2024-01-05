@@ -15,19 +15,27 @@ import { testStub } from '../stubs/test.stub.ts';
 interface Args {
   _: string[];
   crud?: boolean;
+  f?: boolean;
+  force?: boolean;
   h?: boolean;
   help?: boolean;
+  r?: boolean;
+  raw?: boolean;
 }
 
 @Command({
   name: 'make',
   aliases: ['g', 'generate', 'm', 'make'],
   args: {
-    boolean: ['crud', 'h', 'help'],
+    boolean: ['crud', 'f', 'force', 'h', 'help', 'r', 'raw'],
     default: {
       crud: false,
+      f: false,
+      force: false,
       h: false,
       help: false,
+      r: false,
+      raw: false,
     },
   },
 })
@@ -99,9 +107,11 @@ export class MakeCommand implements CommandHandler {
       }
     }
 
+    const name = this.args.r || this.args.raw ? this.name : plural(snakeCase(this.name));
+
     await Deno.writeTextFile(
       `${path}/${this.fileName}.channel.ts`,
-      channelStub(className, plural(snakeCase(this.name))),
+      channelStub(className, name),
     );
   }
 

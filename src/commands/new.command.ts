@@ -2,9 +2,9 @@ import { snakeCase } from 'https://deno.land/x/case@2.2.0/mod.ts';
 import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/encrypter/encrypter.module.ts';
 import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/injector/injector.module.ts';
 import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/logger/logger.module.ts';
-import { readAll } from 'https://deno.land/std@0.210.0/streams/mod.ts';
-import { readerFromStreamReader } from 'https://deno.land/std@0.210.0/streams/mod.ts';
-import { Untar } from 'https://deno.land/std@0.210.0/archive/untar.ts';
+import { readAll } from 'https://deno.land/std@0.211.0/streams/mod.ts';
+import { readerFromStreamReader } from 'https://deno.land/std@0.211.0/streams/mod.ts';
+import { Untar } from 'https://deno.land/std@0.211.0/archive/untar.ts';
 import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 
