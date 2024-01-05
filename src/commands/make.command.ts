@@ -107,7 +107,9 @@ export class MakeCommand implements CommandHandler {
       }
     }
 
-    const name = this.args.r || this.args.raw ? this.name : plural(snakeCase(this.name));
+    const name = this.args.r || this.args.raw
+      ? this.name
+      : plural(snakeCase(this.name));
 
     await Deno.writeTextFile(
       `${path}/${this.fileName}.channel.ts`,
