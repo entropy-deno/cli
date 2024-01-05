@@ -1,9 +1,9 @@
 import { closestString } from 'https://deno.land/std@0.211.0/text/closest_string.ts';
 import { parseArgs } from 'https://deno.land/std@0.211.0/cli/parse_args.ts';
-import { Constructor } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/utils/utils.module.ts';
-import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/injector/injector.module.ts';
-import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/logger/logger.module.ts';
-import { Reflector } from 'https://deno.land/x/entropy@1.0.0-beta.6/src/utils/utils.module.ts';
+import { Constructor } from 'https://deno.land/x/entropy@1.0.0-beta.14/src/utils/utils.module.ts';
+import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.14/src/injector/injector.module.ts';
+import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.14/src/logger/logger.module.ts';
+import { Reflector } from 'https://deno.land/x/entropy@1.0.0-beta.14/src/utils/utils.module.ts';
 import { CommandHandler } from './src/interfaces/command_handler.interface.ts';
 import { EnvCommand } from './src/commands/env.command.ts';
 import { MakeCommand } from './src/commands/make.command.ts';
