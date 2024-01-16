@@ -1,7 +1,7 @@
-import { pascalCase, snakeCase } from 'https://deno.land/x/case@2.2.0/mod.ts';
 import { plural } from 'https://deno.land/x/deno_plural@2.0.0/mod.ts';
-import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.14/src/injector/injector.module.ts';
-import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.14/src/logger/logger.module.ts';
+import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/injector/injector.module.ts';
+import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/logger/logger.module.ts';
+import { Utils } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/utils/utils.module.ts';
 import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 import { channelStub } from '../stubs/channel.stub.ts';
@@ -94,7 +94,7 @@ export class MakeCommand implements CommandHandler {
   }
 
   private async createChannel(): Promise<void> {
-    const className = `${pascalCase(this.name)}Channel`;
+    const className = `${Utils.toPascalCase(this.name)}Channel`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -109,7 +109,7 @@ export class MakeCommand implements CommandHandler {
 
     const name = this.args.r || this.args.raw
       ? this.name
-      : plural(snakeCase(this.name));
+      : plural(Utils.toSnakeCase(this.name));
 
     await Deno.writeTextFile(
       `${path}/${this.fileName}.channel.ts`,
@@ -118,7 +118,7 @@ export class MakeCommand implements CommandHandler {
   }
 
   private async createController(): Promise<void> {
-    const className = `${pascalCase(this.name)}Controller`;
+    const className = `${Utils.toPascalCase(this.name)}Controller`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -135,13 +135,13 @@ export class MakeCommand implements CommandHandler {
       `${path}/${this.fileName}.controller.ts`,
       (this.args.crud ? controllerCrudStub : controllerStub)(
         className,
-        plural(snakeCase(this.name)),
+        plural(Utils.toSnakeCase(this.name)),
       ),
     );
   }
 
   private async createMiddleware(): Promise<void> {
-    const className = `${pascalCase(this.name)}Middleware`;
+    const className = `${Utils.toPascalCase(this.name)}Middleware`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -161,7 +161,7 @@ export class MakeCommand implements CommandHandler {
   }
 
   private async createModule(): Promise<void> {
-    const className = `${pascalCase(this.name)}Module`;
+    const className = `${Utils.toPascalCase(this.name)}Module`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -181,7 +181,7 @@ export class MakeCommand implements CommandHandler {
   }
 
   private async createService(): Promise<void> {
-    const className = `${pascalCase(this.name)}Service`;
+    const className = `${Utils.toPascalCase(this.name)}Service`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -196,12 +196,12 @@ export class MakeCommand implements CommandHandler {
 
     await Deno.writeTextFile(
       `${path}/${this.fileName}.service.ts`,
-      serviceStub(className, `get${plural(pascalCase(this.name))}`),
+      serviceStub(className, `get${plural(Utils.toPascalCase(this.name))}`),
     );
   }
 
   private async createTest(): Promise<void> {
-    const className = `${pascalCase(this.name)}Module`;
+    const className = `${Utils.toPascalCase(this.name)}Module`;
     const path = `${Deno.cwd()}/src/${this.moduleName}`;
 
     try {
@@ -216,7 +216,7 @@ export class MakeCommand implements CommandHandler {
 
     await Deno.writeTextFile(
       `${path}/${this.fileName}.test.ts`,
-      testStub(className, plural(snakeCase(this.name))),
+      testStub(className, plural(Utils.toSnakeCase(this.name))),
     );
   }
 
@@ -240,8 +240,8 @@ export class MakeCommand implements CommandHandler {
       return 1;
     }
 
-    this.fileName = snakeCase(this.name);
-    this.moduleName = plural(snakeCase(this.name));
+    this.fileName = Utils.toSnakeCase(this.name);
+    this.moduleName = plural(Utils.toSnakeCase(this.name));
 
     switch (this.type) {
       case 'all': {

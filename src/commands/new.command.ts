@@ -1,10 +1,10 @@
-import { snakeCase } from 'https://deno.land/x/case@2.2.0/mod.ts';
-import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.14/src/encrypter/encrypter.module.ts';
-import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.14/src/injector/injector.module.ts';
-import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.14/src/logger/logger.module.ts';
-import { readAll } from 'https://deno.land/std@0.212.0/streams/mod.ts';
+import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/encrypter/encrypter.module.ts';
+import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/injector/injector.module.ts';
+import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/logger/logger.module.ts';
+import { readAll } from 'https://deno.land/std@0.212.0/io/mod.ts';
 import { readerFromStreamReader } from 'https://deno.land/std@0.212.0/streams/mod.ts';
 import { Untar } from 'https://deno.land/std@0.212.0/archive/untar.ts';
+import { Utils } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/utils/utils.module.ts';
 import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 
@@ -60,7 +60,7 @@ export class NewCommand implements CommandHandler {
     const repositoryUrl = `https://github.com/entropy-deno/${repositoryName}`;
     const archiveUrl = `${repositoryUrl}/archive/refs/heads/main.tar.gz`;
 
-    const projectName = snakeCase(
+    const projectName = Utils.toSnakeCase(
       args._[1]?.toString() ?? args.name ?? prompt('Project name: ') ??
         'entropy_app',
     );
