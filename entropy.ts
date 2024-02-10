@@ -1,5 +1,5 @@
-import { closestString } from 'https://deno.land/std@0.212.0/text/closest_string.ts';
-import { parseArgs } from 'https://deno.land/std@0.212.0/cli/parse_args.ts';
+import { closestString } from 'https://deno.land/std@0.215.0/text/closest_string.ts';
+import { parseArgs } from 'https://deno.land/std@0.215.0/cli/parse_args.ts';
 import { Constructor } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/utils/utils.module.ts';
 import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/injector/injector.module.ts';
 import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/logger/logger.module.ts';
