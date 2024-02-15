@@ -135,10 +135,15 @@ export class NewCommand implements CommandHandler {
 
         await Deno.writeTextFile(
           envFile,
-          (await Deno.readTextFile(envFile)).replace(
-            /^ENCRYPTER_KEY=.*?$/m,
-            `ENCRYPTER_KEY=${this.encrypter.generateRandomString(32)}}`,
-          ),
+          (await Deno.readTextFile(envFile))
+            .replace(
+              /^ENCRYPTER_KEY=.*?$/m,
+              `ENCRYPTER_KEY=${this.encrypter.generateRandomString(32)}}`,
+            )
+            .replace(
+              /^JWT_KEY=.*?$/m,
+              `JWT_KEY=${this.encrypter.generateRandomString(32)}}`,
+            ),
         );
 
         if (args.mongodb) {
