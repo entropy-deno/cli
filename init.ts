@@ -1,4 +1,4 @@
-import { parseArgs } from 'https://deno.land/std@0.215.0/cli/parse_args.ts';
+import { parseArgs } from 'https://deno.land/std@0.216.0/cli/parse_args.ts';
 import { NewCommand } from './src/commands/new.command.ts';
 
 const args = parseArgs(Deno.args, {

@@ -1,9 +1,9 @@
 import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/encrypter/encrypter.module.ts';
 import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/injector/injector.module.ts';
 import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/logger/logger.module.ts';
-import { readAll } from 'https://deno.land/std@0.215.0/io/mod.ts';
-import { readerFromStreamReader } from 'https://deno.land/std@0.215.0/streams/mod.ts';
-import { Untar } from 'https://deno.land/std@0.215.0/archive/untar.ts';
+import { readAll } from 'https://deno.land/std@0.216.0/io/mod.ts';
+import { readerFromStreamReader } from 'https://deno.land/std@0.216.0/streams/mod.ts';
+import { Untar } from 'https://deno.land/std@0.216.0/archive/untar.ts';
 import { Utils } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/utils/utils.module.ts';
 import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
