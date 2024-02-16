@@ -1,10 +1,10 @@
-import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/encrypter/encrypter.module.ts';
-import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/injector/injector.module.ts';
-import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/logger/logger.module.ts';
+import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.16/src/encrypter/encrypter.module.ts';
+import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.16/src/injector/injector.module.ts';
+import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.16/src/logger/logger.module.ts';
 import { readAll } from 'https://deno.land/std@0.216.0/io/mod.ts';
 import { readerFromStreamReader } from 'https://deno.land/std@0.216.0/streams/mod.ts';
 import { Untar } from 'https://deno.land/std@0.216.0/archive/untar.ts';
-import { Utils } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/utils/utils.module.ts';
+import { Utils } from 'https://deno.land/x/entropy@1.0.0-beta.16/src/utils/utils.module.ts';
 import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 
@@ -137,12 +137,12 @@ export class NewCommand implements CommandHandler {
           envFile,
           (await Deno.readTextFile(envFile))
             .replace(
-              /^ENCRYPTER_KEY=.*?$/m,
-              `ENCRYPTER_KEY=${this.encrypter.generateRandomString(32)}}`,
+              /^ENCRYPTION_KEY=.*?$/m,
+              `ENCRYPTION_KEY=${this.encrypter.generateRandomString(32)}`,
             )
             .replace(
               /^JWT_KEY=.*?$/m,
-              `JWT_KEY=${this.encrypter.generateRandomString(32)}}`,
+              `JWT_KEY=${this.encrypter.generateRandomString(32)}`,
             ),
         );
 

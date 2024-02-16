@@ -1,4 +1,5 @@
-import { Reflector } from 'https://deno.land/x/entropy@1.0.0-beta.15/src/utils/utils.module.ts';
+import { Reflector } from 'https://deno.land/x/entropy@1.0.0-beta.16/src/utils/utils.module.ts';
+import { ClassDecorator } from '../types/class_decorator.type.ts';
 
 interface Options {
   aliases?: string[];
@@ -13,7 +14,7 @@ interface Options {
 export function Command(
   { aliases = [], args = {}, name }: Options,
 ): ClassDecorator {
-  return (target: object) => {
+  return (originalClass) => {
     Reflector.defineMetadata<
       {
         aliases: string[];
@@ -28,6 +29,8 @@ export function Command(
       aliases,
       args,
       name,
-    }, target);
+    }, originalClass);
+
+    return originalClass;
   };
 }
