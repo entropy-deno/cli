@@ -1,6 +1,6 @@
-import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.16/src/encrypter/encrypter.module.ts';
-import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.16/src/injector/injector.module.ts';
-import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.16/src/logger/logger.module.ts';
+import { Encrypter } from 'https://deno.land/x/entropy@1.0.0-beta.17/src/encrypter/encrypter.module.ts';
+import { inject } from 'https://deno.land/x/entropy@1.0.0-beta.17/src/injector/injector.module.ts';
+import { Logger } from 'https://deno.land/x/entropy@1.0.0-beta.17/src/logger/logger.module.ts';
 import { Command } from '../decorators/command.decorator.ts';
 import { CommandHandler } from '../interfaces/command_handler.interface.ts';
 

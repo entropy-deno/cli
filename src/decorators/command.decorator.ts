@@ -1,5 +1,7 @@
-import { Reflector } from 'https://deno.land/x/entropy@1.0.0-beta.16/src/utils/utils.module.ts';
-import { ClassDecorator } from '../types/class_decorator.type.ts';
+import {
+  ClassDecorator,
+  Reflector,
+} from 'https://deno.land/x/entropy@1.0.0-beta.17/src/utils/utils.module.ts';
 
 interface Options {
   aliases?: string[];
