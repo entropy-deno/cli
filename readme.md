@@ -1,6 +1,6 @@
 <div align="center">
   <br>
-  <img src="./.github/assets/logo_full.png" height="70" alt="Logo">
+  <img src="./.github/assets/logo_full.png" height="68" alt="Logo">
   <br>
   <br>
   <br>
@@ -40,16 +40,17 @@
 applications with awesome developer experience.
 
 > [!NOTE]
-> Entropy is currently in the `beta` stage. Although it is already suitable for
-> creating apps, you may still encounter some bugs and breaking changes.
+Entropy is currently in the `beta` stage. Although it is already suitable for
+creating apps, you may still encounter some bugs and breaking changes.
 
 ## Requirements
 
 To run Entropy, your environment has to meet following requirements:
 
-- Deno 1.40.0+
+- Deno ^1.40.0
 
-We recommend to always have the latest version of Deno installed. To update
+> [!TIP]
+It is a good practice to always have the latest version of Deno installed. To update
 Deno, run the following command:
 
 ```shell
@@ -62,7 +63,7 @@ sudo deno upgrade
 ## Security
 
 > [!IMPORTANT]
-If you discovered any bug, please open new issue / pull request in the
+If you discovered any bug, please open a new issue or pull request in the
 [repository](https://github.com/entropy-deno/cli) or email me:
 dom.rajkowski@gmail.com. In case of security vulnerability, please contact
 [me](https://github.com/dominiq007) directly.
