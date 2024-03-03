@@ -14,13 +14,17 @@
     "include": [
       "entropy.ts",
       "init.ts",
-      "src/",
-      "*.md"
+      "src/"
     ],
     "indentWidth": 2,
     "lineWidth": 80,
     "semiColons": true,
     "singleQuote": true
+  },
+  "lint": {
+    "exclude": [
+      "*.md"
+    ]
   },
   "lock": false
 }
