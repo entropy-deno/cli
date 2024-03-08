@@ -1,5 +1,5 @@
 export const testStub = (className: string, name: string) => {
-  return `import { expect } from 'https://deno.land/std@0.218.0/expect/expect.ts';
+  return `import { expect } from 'https://deno.land/std@0.219.0/expect/expect.ts';
   import { fetchRoute } from '@entropy/testing';
   import { ${className} } from './${name}.controller.ts';
   
